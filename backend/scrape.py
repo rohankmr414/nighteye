@@ -11,8 +11,8 @@ load_dotenv()
 
 token = os.environ.get("COIN_CAP_API_KEY")
 
-start_date = datetime.date(2017, 1, 1)
-end_date = datetime.date(2017, 12, 31)
+start_date = datetime.date(2018, 1, 1)
+end_date = datetime.date(2021, 11, 1)
 delta = datetime.timedelta(days=1)
 range = end_date - start_date
 count = range.days + 1
@@ -27,7 +27,7 @@ class BearerAuth(requests.auth.AuthBase):
 
 
 def make_req(start, end):
-    url = "http://api.coincap.io/v2/candles?exchange=poloniex&interval=d1&baseId=bitcoin&quoteId=tether&start={}&end={}".format(
+    url = "http://api.coincap.io/v2/candles?exchange=binance&interval=d1&baseId=bitcoin&quoteId=tether&start={}&end={}".format(
         start, end)
 
     payload = {}
