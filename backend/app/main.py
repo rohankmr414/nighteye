@@ -26,14 +26,11 @@ async def predict(input: Input):
     transformed_input = loaded_scalar.transform(pred_input_shaped)
     input_data = transformed_input.reshape(
         1, transformed_input.shape[0], transformed_input.shape[1])
-    # input_data = loaded_scalar.transform(input_data)
-    # input_data = input_data.reshape(1, 5, 1)
     mdlprediction = model.predict(input_data)
     prediction = loaded_scalar.inverse_transform(mdlprediction)
     return {
         'prediction': float(prediction)
     }
-
 
 if __name__ == '__main__':
     uvicorn.run(app, host='127.0.0.1', port=8000)
