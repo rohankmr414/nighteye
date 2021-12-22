@@ -1,0 +1,35 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Build the Docker image
+        run: |
+          for dir in ./*/
+          do
+            dir=${dir%*/}
+              dir=${dir##*/}
+              version=$(cat ${dir}/image-version.txt)
+              echo ${version}
+              versionExist=$(curl -o /dev/null -sL -w "%{http_code}" -X GET https://ghcr.io/${GITHUB_REPOSITORY}/${dir}-${{ steps.get_branch.outputs.branch }}/manifests/${version} -u $GITHUB_ACTOR:${{ secrets.CR_PAT }})
+              if [[ $versionExist -eq 200 ]]
+              then
+                echo "[+] ${dir} Image Version Already Exist. Skipping build"
+              else
+                echo "[+] ${dir} Image Does Not Exist. Building it"
+                docker build --build-arg ACCESS_TOKEN_USR=$GITHUB_ACTOR --build-arg ACCESS_TOKEN_PWD=${{ secrets.CR_PAT }} -t ghcr.io/$GITHUB_REPOSITORY/${dir}-${{ steps.get_branch.outputs.branch }}:latest ./${dir}/
+                docker tag ghcr.io/$GITHUB_REPOSITORY/${dir}-${{ steps.get_branch.outputs.branch }}:latest ghcr.io/$GITHUB_REPOSITORY/${dir}-${{ steps.get_branch.outputs.branch }}:${version}
+                docker login ghcr.io -u $GITHUB_ACTOR -p ${{ secrets.CR_PAT }}
+                docker push ghcr.io/${GITHUB_REPOSITORY}/${dir}-${{ steps.get_branch.outputs.branch }}:latest
+                docker push ghcr.io/${GITHUB_REPOSITORY}/${dir}-${{ steps.get_branch.outputs.branch }}:${version}
+              fi
+          done
