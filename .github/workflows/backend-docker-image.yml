@@ -2,13 +2,13 @@ name: Create and publish backend Docker image
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: nighteyebackend
+  IMAGE_NAME: ${nighteye-backend}
 
 jobs:
   build-and-push-image:
