@@ -20,7 +20,7 @@ const getPrediction = async (coin, prices) => {
     }
   );
   console.log(pred.data);
-  return String(pred.data.prediction);
+  return String(pred.data.prediction.toFixed(2));
 };
 
 const getData = async (coin) => {

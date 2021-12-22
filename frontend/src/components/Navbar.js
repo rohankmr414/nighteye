@@ -5,7 +5,7 @@ const Navbar = () => {
   return (
     <div>
       <Box bg="#FFFFFf" w="100%" p={4} color="black" textAlign={"center"}>
-        <Text fontSize="4xl">Nighteye</Text>
+        <Text fontSize="4xl">nighteye</Text>
       </Box>
     </div>
   );
