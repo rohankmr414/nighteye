@@ -5,12 +5,23 @@ from pydantic import BaseModel
 from typing import List
 import uvicorn
 from fastapi import FastAPI, Query
+from fastapi.middleware.cors import CORSMiddleware
 # import datetime
 # import time
 import json
 from utils import make_req
 
 app = FastAPI()
+
+origins = ["*"]
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 modelBTC = tf.keras.models.load_model('models/BTC-lstm.h5')
 modelETH = tf.keras.models.load_model('models/ETH-lstm.h5')
@@ -28,6 +39,7 @@ loaded_scalarMATIC = pickle.load(open('scalers/scaler-MATIC.pkl', 'rb'))
 class predInput(BaseModel):
     baseID: str
     values: List[float]
+
 
 @app.get('/prices/')
 def prices(start: int = Query(None, alias="start"), end: int = Query(None, alias="end"), baseID: str = Query(None, alias="baseID")):
