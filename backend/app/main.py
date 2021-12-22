@@ -29,7 +29,7 @@ class predInput(BaseModel):
     baseID: str
     values: List[float]
 
-@app.post('/prices/')
+@app.get('/prices/')
 def prices(start: int = Query(None, alias="start"), end: int = Query(None, alias="end"), baseID: str = Query(None, alias="baseID")):
     # end = datetime.date.today()
     # start = end - datetime.timedelta(days=15)
