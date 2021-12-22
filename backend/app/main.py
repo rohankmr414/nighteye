@@ -61,7 +61,6 @@ def prices(start: int = Query(None, alias="start"), end: int = Query(None, alias
 async def predict(input: predInput):
     vals = np.array(input.values)
     pred_input_shaped = vals.reshape(-1, 1)
-    print(vals)
     if input.baseID == 'bitcoin':
         transformed_input = loaded_scalarBTC.transform(pred_input_shaped)
         input_data = transformed_input.reshape(

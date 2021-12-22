@@ -11,7 +11,7 @@ import {
 
 import { ChevronDownIcon } from "@chakra-ui/icons";
 
-const Dropdown = () => {
+const Dropdown = (props) => {
   return (
     <div>
       <Box textAlign={"center"}>
@@ -20,7 +20,7 @@ const Dropdown = () => {
             Coin List
           </MenuButton>
           <MenuList>
-            <MenuItem minH="48px">
+            <MenuItem minH="40px" onClick={() => props.clickMe("bitcoin")}>
               <Image
                 boxSize="2rem"
                 borderRadius="full"
@@ -30,7 +30,7 @@ const Dropdown = () => {
               />
               <span>Bitcoin</span>
             </MenuItem>
-            <MenuItem minH="40px">
+            <MenuItem minH="40px" onClick={() => props.clickMe("ethereum")}>
               <Image
                 boxSize="2rem"
                 borderRadius="full"
@@ -38,9 +38,9 @@ const Dropdown = () => {
                 alt="ETH"
                 mr="12px"
               />
-              <span>Etherium</span>
+              <span>Ethereum</span>
             </MenuItem>
-            <MenuItem minH="40px">
+            <MenuItem minH="40px" onClick={() => props.clickMe("solana")}>
               <Image
                 boxSize="2rem"
                 borderRadius="full"
@@ -50,7 +50,7 @@ const Dropdown = () => {
               />
               <span>Solana</span>
             </MenuItem>
-            <MenuItem minH="40px">
+            <MenuItem minH="40px" onClick={() => props.clickMe("cardano")}>
               <Image
                 boxSize="2rem"
                 borderRadius="full"
@@ -60,7 +60,7 @@ const Dropdown = () => {
               />
               <span>Cardano</span>
             </MenuItem>
-            <MenuItem minH="40px">
+            <MenuItem minH="40px" onClick={() => props.clickMe("polygon")}>
               <Image
                 boxSize="2rem"
                 borderRadius="full"
