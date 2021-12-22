@@ -45,36 +45,36 @@ def prices(start: int = Query(None, alias="start"), end: int = Query(None, alias
     }
 
 
-@app.post("/predict")
+@app.post("/predict/")
 async def predict(input: predInput):
     vals = np.array(input.values)
     pred_input_shaped = vals.reshape(-1, 1)
     print(vals)
-    if input.baseID == 'BTC':
+    if input.baseID == 'bitcoin':
         transformed_input = loaded_scalarBTC.transform(pred_input_shaped)
         input_data = transformed_input.reshape(
             1, transformed_input.shape[0], transformed_input.shape[1])
         prediction = modelBTC.predict(input_data)
         prediction = loaded_scalarBTC.inverse_transform(prediction)
-    elif input.baseID == 'ETH':
+    elif input.baseID == 'ethereum':
         transformed_input = loaded_scalarETH.transform(pred_input_shaped)
         input_data = transformed_input.reshape(
             1, transformed_input.shape[0], transformed_input.shape[1])
         prediction = modelETH.predict(input_data)
         prediction = loaded_scalarETH.inverse_transform(prediction)
-    elif input.baseID == 'ADA':
+    elif input.baseID == 'cardano':
         transformed_input = loaded_scalarADA.transform(pred_input_shaped)
         input_data = transformed_input.reshape(
             1, transformed_input.shape[0], transformed_input.shape[1])
         prediction = modelADA.predict(input_data)
         prediction = loaded_scalarADA.inverse_transform(prediction)
-    elif input.baseID == 'SOL':
+    elif input.baseID == 'solana':
         transformed_input = loaded_scalarSOL.transform(pred_input_shaped)
         input_data = transformed_input.reshape(
             1, transformed_input.shape[0], transformed_input.shape[1])
         prediction = modelSOL.predict(input_data)
         prediction = loaded_scalarSOL.inverse_transform(prediction)
-    elif input.baseID == 'MATIC':
+    elif input.baseID == 'polygon':
         transformed_input = loaded_scalarMATIC.transform(pred_input_shaped)
         input_data = transformed_input.reshape(
             1, transformed_input.shape[0], transformed_input.shape[1])
