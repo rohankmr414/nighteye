@@ -1,15 +1,15 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: myapp
+  name: nighteye-backend
 spec:
   selector:
     matchLabels:
-      app: nighteye-backend
+      component: nighteye-backend
   template:
     metadata:
       labels:
-        app: nighteye-backend
+        component: nighteye-backend
     spec:
       containers:
         - name: nighteye-backend
@@ -21,16 +21,18 @@ spec:
           ports:
             - containerPort: 8000
           env:
+            - name: COIN_CAP_API_KEY
+              value: ''
             - name: PORT
               value: "8000"
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nighteye-backend-service
+  name: nighteye-backend-ip-service
 spec:
   selector:
-    app: nighteye-backend
+    component: nighteye-backend
   ports:
     - port: 8000
       targetPort: 8000
@@ -42,11 +44,11 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app: nighteye-frontend
+      component: nighteye-frontend
   template:
     metadata:
       labels:
-        app: nighteye-frontend
+        component: nighteye-frontend
     spec:
       containers:
         - name: nighteye-frontend
@@ -59,6 +61,44 @@ spec:
             - containerPort: 80
           env:
             - name: API_URL
-              value: nighteye-backend-service
+              value: nighteye-backend-ip-service
             - name: API_PORT
               value: "8000"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nighteye-frontend-ip-service
+spec:
+  selector:
+    component: nighteye-frontend
+  ports:
+    - port: 80
+      targetPort: 80
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: ingress-service
+  annotations:
+    kubernetes.io/ingress.class: "nginx"
+    nginx.ingress.kubernetes.io/use-regex: "true"
+    nginx.ingress.kubernetes.io/rewrite-target: /$1
+spec:
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: /?(.*)
+            backend:
+              service:
+                name: nighteye-frontend-ip-service
+                port:
+                  number: 80
+          - pathType: Prefix
+            path: /?(.*)
+            backend:
+              service:
+                name: nighteye-backend-ip-service
+                port:
+                  number: 8000
