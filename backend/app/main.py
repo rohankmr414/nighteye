@@ -6,12 +6,17 @@ from typing import List
 import uvicorn
 from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
-# import datetime
-# import time
+import os
 import json
+from dotenv import load_dotenv
+
 from utils import make_req
 
+load_dotenv()
+
 app = FastAPI()
+
+port = os.environ.get("PORT")
 
 origins = ["*"]
 

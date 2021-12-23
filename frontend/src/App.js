@@ -5,9 +5,12 @@ import { Prediction } from "./components/Prediction";
 import React from "react";
 import Axios from "axios";
 
+const URL = process.env.API_URL;
+const PORT = process.env.API_PORT || 3000;
+
 const getPrediction = async (coin, prices) => {
   let pred = await Axios.post(
-    `http://127.0.0.1:8000/predict/`,
+    `http://${URL}:${PORT}/predict/`,
     {
       baseID: coin,
       values: prices,
@@ -26,7 +29,7 @@ const getPrediction = async (coin, prices) => {
 const getData = async (coin) => {
   let end = new Date().getTime();
   let start = end - 86400000 * 15;
-  let url = `http://127.0.0.1:8000/prices/?start=${start}&end=${end}&baseID=${coin}`;
+  let url = `http://{URL}:${PORT}/prices/?start=${start}&end=${end}&baseID=${coin}`;
   let res = await Axios.get(url);
 
   let pred = await getPrediction(coin, res.data.prices);

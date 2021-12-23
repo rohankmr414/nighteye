@@ -8,6 +8,8 @@ RUN apt-get update && apt-get install -y python3-pip
 
 ENV COIN_CAP_API_KEY=${COIN_CAP_API_KEY}
 
+ENV PORT=${PORT}
+
 RUN pip3 install -r requirements.txt
 
 EXPOSE 8000
