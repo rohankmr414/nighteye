@@ -6,7 +6,7 @@ import React from "react";
 import Axios from "axios";
 
 const URL = process.env.API_URL;
-const PORT = process.env.API_PORT || 3000;
+const PORT = process.env.API_PORT;
 
 const getPrediction = async (coin, prices) => {
   let pred = await Axios.post(
