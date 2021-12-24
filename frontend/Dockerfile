@@ -5,9 +5,9 @@ COPY . /project
 
 WORKDIR /project
 
-ENV API_URL=${API_URL}
+# ENV API_URL=${API_URL}
 
-ENV API_PORT=${API_PORT}
+# ENV API_PORT=${API_PORT}
 
 RUN npm ci
 

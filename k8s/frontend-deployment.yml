@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nighteye-frontend
+spec:
+  selector:
+    matchLabels:
+      component: nighteye-frontend
+  template:
+    metadata:
+      labels:
+        component: nighteye-frontend
+    spec:
+      containers:
+        - name: nighteye-frontend
+          image: ghcr.io/rohankmr414/nighteye/frontend:latest
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "500m"
+          ports:
+            - containerPort: 80
+          env:
+            - name: API_URL
+              value: nighteye-backend-ip-service.svc.cluster.local
+            - name: API_PORT
+              value: "8000"
