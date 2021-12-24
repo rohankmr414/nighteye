@@ -47,12 +47,12 @@ class predInput(BaseModel):
     values: List[float]
 
 
-@app.route('/healthz')
+@app.get('/healthz')
 def healthz():
     return "OK"
 
 
-@app.route('/healthx')
+@app.get('/healthx')
 def healthx():
     time.sleep(3)
     return "OK"
