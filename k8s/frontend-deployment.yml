@@ -20,8 +20,3 @@ spec:
               cpu: "500m"
           ports:
             - containerPort: 80
-          env:
-            - name: API_URL
-              value: nighteye-backend-ip-service.svc.cluster.local
-            - name: API_PORT
-              value: "8000"
