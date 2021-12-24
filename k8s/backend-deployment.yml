@@ -14,6 +14,22 @@ spec:
       containers:
         - name: nighteye-backend
           image: ghcr.io/rohankmr414/nighteye/backend:latest
+          readinessProbe:
+            httpGet:
+              path: /healthx
+              port: 8000
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            initialDelaySeconds: 5
+            timeoutSeconds: 2
+            periodSeconds: 10
+            failureThreshold: 3
           ports:
             - containerPort: 8000
           env:

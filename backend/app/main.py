@@ -8,6 +8,7 @@ from fastapi import FastAPI, Query
 from fastapi.middleware.cors import CORSMiddleware
 import os
 import json
+import time
 from dotenv import load_dotenv
 
 from utils import make_req
@@ -44,6 +45,17 @@ loaded_scalarMATIC = pickle.load(open('scalers/scaler-MATIC.pkl', 'rb'))
 class predInput(BaseModel):
     baseID: str
     values: List[float]
+
+
+@app.route('/healthz')
+def healthz():
+    return "OK"
+
+
+@app.route('/healthx')
+def healthx():
+    time.sleep(3)
+    return "OK"
 
 
 @app.get('/prices/')

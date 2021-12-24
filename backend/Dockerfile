@@ -12,7 +12,7 @@ ENV PORT=${PORT}
 
 RUN pip3 install -r requirements.txt
 
-EXPOSE 8000
+EXPOSE ${PORT}
 
 CMD [ "python3", "app/main.py" ]
 
