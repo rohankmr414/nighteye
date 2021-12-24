@@ -52,12 +52,6 @@ def healthz():
     return "OK"
 
 
-@app.get('/healthx')
-def healthx():
-    time.sleep(3)
-    return "OK"
-
-
 @app.get('/prices/')
 def prices(start: int = Query(None, alias="start"), end: int = Query(None, alias="end"), baseID: str = Query(None, alias="baseID")):
     # end = datetime.date.today()
