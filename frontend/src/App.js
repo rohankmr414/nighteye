@@ -19,7 +19,6 @@ const getPrediction = async (coin, prices) => {
       },
     }
   );
-  console.log(pred.data);
   return String(pred.data.prediction.toFixed(2));
 };
 
@@ -52,7 +51,6 @@ class App extends React.Component {
       data: [],
       pred: "",
     };
-    console.log(this.state);
   }
 
   handleClick = (coin) => {

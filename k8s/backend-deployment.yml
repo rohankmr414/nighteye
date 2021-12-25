@@ -16,8 +16,8 @@ spec:
           image: ghcr.io/rohankmr414/nighteye/backend:latest
           resources:
             limits:
-              memory: "1G"
-              cpu: "1"
+              memory: "700Mi"
+              cpu: "0.5"
           readinessProbe:
             httpGet:
               path: /healthz
